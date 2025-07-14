@@ -133,17 +133,32 @@ io.on('connection', (socket) => {
 
   // Handle private messages
   socket.on('private_message', ({ to, message }) => {
+    const receiverUser = users[to];
     const messageData = {
       id: Date.now(),
       sender: users[socket.id]?.username || 'Anonymous',
       senderId: socket.id,
+      receiver: receiverUser?.username || '',
       message,
       timestamp: new Date().toISOString(),
       isPrivate: true,
+      reactions: {},
+      read: false,
     };
-    
     socket.to(to).emit('private_message', messageData);
     socket.emit('private_message', messageData);
+  });
+
+  // Handle message reactions
+  socket.on('react_message', ({ msgId, emoji, user }) => {
+    // Broadcast to all clients (could optimize for relevant users only)
+    io.emit('react_message', { msgId, emoji, user });
+  });
+
+  // Handle read receipts
+  socket.on('read_messages', ({ msgIds, user }) => {
+    // Broadcast to all clients (could optimize for relevant users only)
+    io.emit('read_messages', { msgIds, user });
   });
 
   // Handle disconnection

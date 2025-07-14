@@ -41,15 +41,15 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div style={{ maxWidth: 300, margin: '100px auto', padding: 20, border: '1px solid #ccc', borderRadius: 8 }}>
-      <h2>{isRegister ? 'Register' : 'Login'} to Chat</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="login-card">
+      <h2 className="login-title">{isRegister ? 'Register' : 'Login'} to Chat</h2>
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
         <input
           type="text"
           placeholder="Enter your username"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
+          className="login-input"
           autoComplete="username"
         />
         <input
@@ -57,27 +57,31 @@ function Login({ onLogin }) {
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
+          className="login-input"
           autoComplete={isRegister ? 'new-password' : 'current-password'}
         />
-        <button type="submit" style={{ width: '100%', padding: 8 }} disabled={loading}>
+        <button
+          type="submit"
+          className="login-btn"
+          disabled={loading}
+        >
           {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
         </button>
       </form>
-      <div style={{ marginTop: 10, color: 'red', minHeight: 20 }}>{error}</div>
-      <div style={{ marginTop: 10, color: 'green', minHeight: 20 }}>{success}</div>
-      <div style={{ marginTop: 10 }}>
+      <div className="login-error">{error}</div>
+      <div className="login-success">{success}</div>
+      <div className="login-switch">
         {isRegister ? (
           <span>
             Already have an account?{' '}
-            <button type="button" onClick={() => { setIsRegister(false); setError(''); setSuccess(''); }} style={{ color: 'blue', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+            <button type="button" onClick={() => { setIsRegister(false); setError(''); setSuccess(''); }} className="login-switch-btn">
               Login
             </button>
           </span>
         ) : (
           <span>
             Don&apos;t have an account?{' '}
-            <button type="button" onClick={() => { setIsRegister(true); setError(''); setSuccess(''); }} style={{ color: 'blue', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+            <button type="button" onClick={() => { setIsRegister(true); setError(''); setSuccess(''); }} className="login-switch-btn">
               Register
             </button>
           </span>
